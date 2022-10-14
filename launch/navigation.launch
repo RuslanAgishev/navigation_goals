@@ -3,34 +3,19 @@
     <arg name="device" default="cuda" doc="Device to run tensor operations on: cpu or cuda"/>
     <arg name="rviz" default="false" doc="Launch RViz for data visualization or not"/>
     <arg name="sim_time" default="true"/>
-    <arg name="use_osm" default="false"/>
+    <arg name="use_osm" default="true"/>
     <arg name="follower" default="true"/>
     <arg name="bumper" default="true"/>
     <arg name="traversability" default="semantic" doc="Traversability estimation type: 'semantic or geometric'"/>
-    <arg name="gpx_assignment" default="$(find gps_to_path)/data/unhost_easy.gpx"/>
+    <arg name="gpx_assignment" default="$(find gps_to_path)/data/old/unhost_west_ex_through_field.gpx"/>
 
     <param name="use_sim_time" value="$(arg sim_time)"/>
-
-<!--    <node pkg="tf" type="static_transform_publisher" name="gps_frame_broadcaster"-->
-<!--          args="0 0 0   0 0 0 1 base_link gps 100" />-->
-<!--    <node pkg="tf" type="static_transform_publisher" name="map_frame_broadcaster"-->
-<!--          args="0 0 0   0 0 0 1 map odom 100" />-->
-<!--    <node pkg="tf" type="static_transform_publisher" name="utm_frame_broadcaster"-->
-<!--          args="0 0 0   0 0 0 1 map utm 100" />-->
-<!--    <node pkg="tf" type="static_transform_publisher" name="utm_frame_broadcaster"-->
-<!--          args="-437998.7931613073 -5549045.722476885 0 0 0 0 1 map utm 100" />-->
-
-    <!-- IMU and Magnetometer to azimuth data -->
-    <node pkg="navigation_goals" type="imu_to_mag_azimuth" name="imu_to_mag_azimuth"/>
-<!--    <node pkg="gps_to_path" type="mag_field_to_azimuth" name="mag_field_to_azimuth" output="screen">-->
-<!--        <rosparam subst_value="true">-->
-<!--            imu_link: 'imu_link'-->
-<!--            robot_link: 'base_link'-->
-<!--            x_mean: 0.0-->
-<!--            y_mean: 0.0-->
-<!--            z_mean: 0.0-->
-<!--        </rosparam>-->
-<!--    </node>-->
+    
+    <!-- Fused localization -->
+    <include file="$(find cras_gps_odom)/launch/gps_odom.launch">
+        <arg name="fix_topic" value="fix"/>
+        <arg name="magnetic_declination" value="0.0"/>
+    </include>
 
     <!-- Traversability estimation -->
     <include file="$(find traversability_estimation)/launch/$(arg traversability)_traversability.launch">
