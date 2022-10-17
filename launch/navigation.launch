@@ -3,11 +3,12 @@
     <arg name="device" default="cuda" doc="Device to run tensor operations on: cpu or cuda"/>
     <arg name="rviz" default="false" doc="Launch RViz for data visualization or not"/>
     <arg name="sim_time" default="true"/>
-    <arg name="use_osm" default="true"/>
+    <arg name="use_osm" default="false"/>
     <arg name="follower" default="true"/>
-    <arg name="bumper" default="true"/>
+    <arg name="bumper" default="false"/>
     <arg name="traversability" default="semantic" doc="Traversability estimation type: 'semantic or geometric'"/>
-    <arg name="gpx_assignment" default="$(find gps_to_path)/data/old/unhost_west_ex_through_field.gpx"/>
+<!--    <arg name="gpx_assignment" default="$(find gps_to_path)/data/old/unhost_west_ex_through_field.gpx"/>-->
+    <arg name="gpx_assignment" default="$(find gps_to_path)/data/old/unhost_easy.gpx"/>
 
     <param name="use_sim_time" value="$(arg sim_time)"/>
     
@@ -23,7 +24,7 @@
     </include>
 
     <!-- Path planner -->
-    <node pkg="topic_tools" type="relay" name="semantic_trav_relay" args="cloud_segmentation/points traversability/points" />
+    <node pkg="topic_tools" type="relay" name="semantic_trav_relay" args="cloud_segmentation/points_20cm traversability/points" />
     <node pkg="topic_tools" type="relay" name="geometric_trav_relay" args="geometric_traversability_raw traversability/points" />
     <include file="$(dirname)/path_planner.launch">
         <arg name="use_osm" value="$(arg use_osm)"/>

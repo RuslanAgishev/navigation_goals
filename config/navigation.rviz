@@ -187,6 +187,8 @@ Visualization Manager:
           Value: true
         gps:
           Value: true
+        gps_odom:
+          Value: true
         imu_link:
           Value: true
         inertial_link:
@@ -211,6 +213,10 @@ Visualization Manager:
           Value: true
         user_rail_link:
           Value: true
+        utm:
+          Value: true
+        utm_local:
+          Value: true
       Marker Alpha: 1
       Marker Scale: 1
       Name: TF
@@ -230,6 +236,10 @@ Visualization Manager:
               {}
             gps:
               {}
+            gps_odom:
+              utm_local:
+                utm:
+                  {}
             imu_link:
               {}
             inertial_link:
@@ -578,7 +588,7 @@ Visualization Manager:
         Min Value: -10
         Value: true
       Axis: Z
-      Channel Name: untrav_cost
+      Channel Name: type
       Class: rviz/PointCloud2
       Color: 255; 255; 255
       Color Transformer: Intensity
@@ -604,7 +614,7 @@ Visualization Manager:
       Marker Topic: /bumper_bbx
       Name: Virtual bumper
       Namespaces:
-        "": true
+        {}
       Queue Size: 100
       Value: true
     - Alpha: 0.5
